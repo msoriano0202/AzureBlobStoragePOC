@@ -1,6 +1,7 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using AzureBlobStorage.POC.Api.Filters;
 using AzureBlobStorage.POC.Dto.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace AzureBlobStorage.POC.Api.Controllers
 {
+    [ApiKeyAuth]
     [ApiController]
     [Route("api/containers/{containerName}/[controller]")]
     public class AzureBlobItemController : Controller

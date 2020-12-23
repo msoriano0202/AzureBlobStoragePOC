@@ -1,11 +1,13 @@
 ﻿using AzureBlobStorage.POC.Dto.Request;
 using AzureBlobStorage.POC.Dto.Response;
 using AzureBlobStorage.POC.Web.Models;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,11 +23,18 @@ namespace AzureBlobStorage.POC.Web.DataAccess
 
     public class DABlobContainer : IDABlobContainer
     {
+        private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient;
-
-        public DABlobContainer(IHttpClientFactory factory)
+        
+        public DABlobContainer(
+            IConfiguration configuration,
+            IHttpClientFactory factory
+            )
         {
+            _configuration = configuration;
+
             _httpClient = factory.CreateClient("httpClient");
+            _httpClient.DefaultRequestHeaders.Add("ApiKey", _configuration["ApiKey"]);
         }
 
         public async Task<List<BlobContainerResponse>> GetContainersAsync()

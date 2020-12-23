@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using AzureBlobStorage.POC.Api.Filters;
 using AzureBlobStorage.POC.Dto.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace AzureBlobStorage.POC.Api.Controllers
 {
+    [ApiKeyAuth]
     [ApiController]
     [Route("api/[controller]")]
     public class AzureBlobCleaningController : Controller
