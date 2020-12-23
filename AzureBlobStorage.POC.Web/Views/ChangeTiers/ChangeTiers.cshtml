@@ -1,0 +1,63 @@
+﻿@model ChangeTierViewModel
+
+@{
+    ViewData["Title"] = "Change Tiers";
+}
+
+<h2>Change Tiers</h2>
+<hr />
+
+@using (Html.BeginForm("ChangeTiers", "ChangeTiers", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label font-italic">Container Name</label>
+            <div class="form-group">
+                <select asp-for="ContainerName" asp-items="Model.Containers" class="form-control"></select>
+                <span asp-validation-for="ContainerName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label font-italic">Tier Name</label>
+            <div class="form-group">
+                <select asp-for="TierName" asp-items="Model.Tiers" class="form-control"></select>
+                <span asp-validation-for="TierName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label font-italic">Days</label>
+            <div class="form-group">
+                <input asp-for="Days" class="form-control" />
+                <span asp-validation-for="Days" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit">Run</button>
+}
+
+<br /><br />
+<div class="text-info">
+    <p>
+        @if (Model.Result != null && Model.Result.ItemsMoved.Any())
+        {
+            <span>Items moved:</span><br />
+            <ul>
+                @foreach (var item in Model.Result.ItemsMoved)
+                {
+                    <li>@item</li>
+                }
+            </ul>
+            <br />
+            <span>Operation Cost: $</span>@String.Format("{0:F5}", Model.Result.OperationCost)
+        }
+    </p>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

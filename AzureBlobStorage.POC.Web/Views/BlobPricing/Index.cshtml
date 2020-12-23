@@ -1,0 +1,92 @@
+﻿@using AzureBlobStorage.POC.Dto.Response;
+
+@model BlobPricingResponse
+
+
+@{
+    ViewData["Title"] = "Blob Pricing";
+}
+
+<h2>Blob Pricing</h2>
+<hr />
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Access Tier</th>
+            <th scope="col">Number of Items</th>
+            <th scope="col">Total Size (GB)</th>
+            <th scope="col">Price ($)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int counter = 1; }
+        @foreach (var item in Model.Items)
+        {
+        <tr>
+            <th scope="row">@counter</th>
+            <td>
+                @item.TierName
+            </td>
+            <td>
+                @item.NumberOfItems
+            </td>
+            <td>
+                @String.Format("{0:F5}", item.TotalSize)
+            </td>
+            <td>
+                @String.Format("{0:F5}", item.Price)
+            </td>
+        </tr>
+            counter++;
+        }
+    </tbody>
+</table>
+
+<br />
+<span class="font-weight-bold">Location: </span> Center of EE.UU. 
+
+<table class="table">
+    <thead>
+        <tr>
+            <td></td>
+            <th>Premium</th>
+            <th>Hot</th>
+            <th>Cool</th>
+            <th>Archive</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                First 50 TB (TB)/month
+            </td>
+
+            <td><span>$0.18</span> per GB</td>
+            <td><span>$0.0184</span> per GB</td>
+            <td><span>$0.01</span> per GB</td>
+            <td><span>$0.002</span> per GB</td>
+        </tr>
+        <tr>
+            <td>
+                Next 450 TB/month
+            </td>
+
+            <td><span>$0.18</span> per GB</td>
+            <td><span>$0.0177</span> per GB</td>
+            <td><span>$0.01</span> per GB</td>
+            <td><span>$0.002</span> per GB</td>
+        </tr>
+        <tr>
+            <td>
+                More than de 500 TB/month
+            </td>
+
+            <td><span>$0.18</span> per GB</td>
+            <td><span>$0.0170</span> per GB</td>
+            <td><span>$0.01</span> per GB</td>
+            <td><span>$0.002</span> per GB</td>
+        </tr>
+    </tbody>
+</table>

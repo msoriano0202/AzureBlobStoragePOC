@@ -1,0 +1,52 @@
+﻿@using AzureBlobStorage.POC.Dto.Response;
+
+@model IEnumerable<BlobContainerResponse>
+
+
+@{
+    ViewData["Title"] = "Containers Manager";
+}
+
+<h2>Containers</h2>
+<hr />
+
+@using (Html.BeginForm("AddBlobContainer", "BlobContainers", FormMethod.Post))
+{
+    <span>New Container: </span>
+    <input type="text" required name="containerName" />
+
+    <button type="submit">Add</button>
+}
+<br />
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Public Access</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int counter = 1; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@counter</th>
+                <td>
+                    @Html.ActionLink(@item.Name, "Index", "BlobItems", new { containerName = @item.Name })
+                </td>
+                <td>@item.PublicAccess</td>
+                <td>
+                    @Html.ActionLink("Delete", "DeleteBlobContainer", new { containerName = @item.Name })
+                </td>
+            </tr>
+            counter++;
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

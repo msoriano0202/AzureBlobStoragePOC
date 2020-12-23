@@ -1,0 +1,57 @@
+﻿@model BlobContainerViewModel
+
+@{
+    ViewData["Title"] = "Blob Items Manager";
+}
+
+<h2>Container: @Model.ContainerName</h2>
+<hr />
+
+<form asp-action="AddBlobItem" enctype="multipart/form-data">
+    <input type="hidden" asp-for="ContainerName" />
+
+    <div class="form-group">
+        <input asp-for="NewFile" required class="form-control" type="file" />
+        <span asp-validation-for="NewFile" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Add file" class="btn btn-primary" />
+    </div>
+</form>
+
+@if (Model.BlobItems != null)
+{
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Item</th>
+            <th scope="col">Access Tier</th>
+            <th scope="col">Blob Type</th>
+            <th scope="col">Created On</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int counter = 1; }
+        @foreach (var item in Model.BlobItems)
+        {
+            <tr>
+                <td>
+                    <b>Name:</b> @item.Name<br />
+                    <a target="_blank" href="@item.AbosluteUrl">@item.AbosluteUrl</a>
+                </td>
+                <td>
+                    @item.AccessTier
+                </td>
+                <td>
+                    @item.BlobType
+                </td>
+                <td>@item.CreatedOnToString</td>
+                <td>@Html.ActionLink("Delete", "DeleteBlobItem", new { containerName = Model.ContainerName, fileName = @item.Name })</td>
+            </tr>
+            counter++;
+        }
+    </tbody>
+</table>
+}

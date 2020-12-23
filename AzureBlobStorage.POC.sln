@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureBlobStorage.POC.Api", "AzureBlobStorage.POC.Api\AzureBlobStorage.POC.Api.csproj", "{20EEC719-FB37-4B94-951F-CDDB88A1EF72}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureBlobStorage.POC.Web", "AzureBlobStorage.POC.Web\AzureBlobStorage.POC.Web.csproj", "{26C0F524-65FB-48B5-B5BD-4B9748005F35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureBlobStorage.POC.Dto", "AzureBlobStorage.POC.Dto\AzureBlobStorage.POC.Dto.csproj", "{1FB035BC-902F-42CC-BE8F-3FA6CD76C4A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20EEC719-FB37-4B94-951F-CDDB88A1EF72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20EEC719-FB37-4B94-951F-CDDB88A1EF72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20EEC719-FB37-4B94-951F-CDDB88A1EF72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20EEC719-FB37-4B94-951F-CDDB88A1EF72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26C0F524-65FB-48B5-B5BD-4B9748005F35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26C0F524-65FB-48B5-B5BD-4B9748005F35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26C0F524-65FB-48B5-B5BD-4B9748005F35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26C0F524-65FB-48B5-B5BD-4B9748005F35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB035BC-902F-42CC-BE8F-3FA6CD76C4A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB035BC-902F-42CC-BE8F-3FA6CD76C4A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB035BC-902F-42CC-BE8F-3FA6CD76C4A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB035BC-902F-42CC-BE8F-3FA6CD76C4A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {62BFB867-A6A4-4C2D-ADAC-4D718C7D0C43}
+	EndGlobalSection
+EndGlobal
