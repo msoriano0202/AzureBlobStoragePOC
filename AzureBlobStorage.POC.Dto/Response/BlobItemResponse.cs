@@ -10,5 +10,8 @@ namespace AzureBlobStorage.POC.Dto.Response
         public string BlobType { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedOnToString { get; set; }
+        public string LastAccessedOnToString { get; set; }
+        public string LastModifiedOnToString { get; set; }
+        public string AccessTierChangedOnToString { get; set; }        
     }
 }

@@ -22,34 +22,45 @@
 
 @if (Model.BlobItems != null)
 {
-<table class="table">
+<table class="table small">
     <thead class="thead-light">
         <tr>
             <th scope="col">Item</th>
             <th scope="col">Access Tier</th>
-            <th scope="col">Blob Type</th>
-            <th scope="col">Created On</th>
-            <th scope="col">Actions</th>
+            @*<th scope="col">Blob Type</th>*@
+            <th scope="col">Created</th>
+
+            <th scope="col">Last Accessed</th>
+            <th scope="col">Last Modified</th>
+            <th scope="col">Access Tier Changed</th>
+
+            @*<th scope="col">Actions</th>*@
         </tr>
     </thead>
     <tbody>
         @{ int counter = 1; }
         @foreach (var item in Model.BlobItems)
         {
-            <tr>
-                <td>
-                    <b>Name:</b> @item.Name<br />
-                    <a target="_blank" href="@item.AbosluteUrl">@item.AbosluteUrl</a>
-                </td>
-                <td>
-                    @item.AccessTier
-                </td>
-                <td>
-                    @item.BlobType
-                </td>
-                <td>@item.CreatedOnToString</td>
-                <td>@Html.ActionLink("Delete", "DeleteBlobItem", new { containerName = Model.ContainerName, fileName = @item.Name })</td>
-            </tr>
+        <tr>
+            <td>
+                <b>Name:</b> @item.Name<br />
+                <a target="_blank" href="@item.AbosluteUrl">@item.AbosluteUrl</a><br />
+                [@Html.ActionLink("Delete", "DeleteBlobItem", new { containerName = Model.ContainerName, fileName = @item.Name })]
+            </td>
+            <td>
+                @item.AccessTier
+            </td>
+            @*<td>
+                @item.BlobType
+            </td>*@
+            <td>@item.CreatedOnToString</td>
+
+            <td>@item.LastAccessedOnToString</td>
+            <td>@item.LastModifiedOnToString</td>
+            <td>@item.AccessTierChangedOnToString</td>
+
+            @*<td>@Html.ActionLink("Delete", "DeleteBlobItem", new { containerName = Model.ContainerName, fileName = @item.Name })</td>*@
+        </tr>
             counter++;
         }
     </tbody>

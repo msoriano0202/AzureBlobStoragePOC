@@ -33,6 +33,16 @@ namespace AzureBlobStorage.POC.Api.Controllers
             _blobServiceClient = new BlobServiceClient(_configuration["StorageConnection"]);
         }
 
+        private string GetDateTimeToString(DateTimeOffset? dateTimeOffset)
+        {
+            if (dateTimeOffset.HasValue)
+            {
+                return dateTimeOffset.Value.DateTime.ToString("yyyy-MM-dd");
+            }
+
+            return string.Empty;
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAsync(string containerName)
         {
@@ -54,7 +64,10 @@ namespace AzureBlobStorage.POC.Api.Controllers
                         AccessTier = blob.Properties.AccessTier?.ToString(),
                         BlobType = blob.Properties.BlobType?.ToString(),
                         CreatedOn = blob.Properties.CreatedOn.Value.DateTime,
-                        CreatedOnToString = blob.Properties.CreatedOn.Value.DateTime.ToString("yyyy-MM-dd")
+                        CreatedOnToString = blob.Properties.CreatedOn.Value.DateTime.ToString("yyyy-MM-dd"),
+                        LastAccessedOnToString = GetDateTimeToString(blob.Properties.LastAccessedOn),
+                        LastModifiedOnToString = GetDateTimeToString(blob.Properties.LastModified),
+                        AccessTierChangedOnToString = GetDateTimeToString(blob.Properties.AccessTierChangedOn)
                     });
                 }
             }
