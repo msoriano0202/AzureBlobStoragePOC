@@ -40,23 +40,62 @@
     <button type="submit">Run</button>
 }
 
+@if (Model.Result != null && Model.Result.ItemsMoved.Any())
+{
 <br /><br />
 <div class="text-info">
     <p>
-        @if (Model.Result != null && Model.Result.ItemsMoved.Any())
-        {
-            <span>Items moved:</span><br />
-            <ul>
-                @foreach (var item in Model.Result.ItemsMoved)
-                {
-                    <li>@item</li>
-                }
-            </ul>
-            <br />
-            <span>Operation Cost: $</span>@String.Format("{0:F5}", Model.Result.OperationCost)
-        }
+        <span>Items moved:</span><br />
+        <ul>
+            @foreach (var item in Model.Result.ItemsMoved)
+            {
+                <li>@item</li>
+            }
+        </ul>
+        <br />
+        <span>Operation Cost: $</span>@String.Format("{0:F5}", Model.Result.OperationCost)
     </p>
 </div>
+}
+
+<br />
+<span class="font-weight-bold">Location: </span> Center of EE.UU.
+<br />
+<a target="_blank" href="https://azure.microsoft.com/en-us/pricing/details/storage/blobs/">[Reference 1]</a>
+<br />
+<a target="_blank" href="https://www.apptio.com/blog/essential-guide-azure-blob-storage-pricing/">[Reference 2]</a>
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <td></td>
+            <th>Hot</th>
+            <th>Cool</th>
+            <th>Archive</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Write to
+            </td>
+
+            <td><span>$0.000005</span> per TRX</td>
+            <td><span>$0.00001</span> per TRX</td>
+            <td><span>$0.00001</span> per TRX</td>
+        </tr>
+        <tr>
+            <td>
+                Read from
+            </td>
+
+            <td><span>$0.0000004</span> per TRX</td>
+            <td><span>$0.000001</span> per TRX</td>
+            <td><span>$0.0005</span> per TRX</td>
+        </tr>
+    </tbody>
+</table>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

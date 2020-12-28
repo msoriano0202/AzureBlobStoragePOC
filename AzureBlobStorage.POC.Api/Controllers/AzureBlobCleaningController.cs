@@ -82,12 +82,15 @@ namespace AzureBlobStorage.POC.Api.Controllers
             var today = DateTime.Now;
             var itemsMoved = new List<string>();
             var itemsCounter = 0;
-            var priceToCoolTier = Convert.ToDouble(_configuration["AzureMoveBlobPricing:ToCoolTier"]);
+            var priceWriteToCoolTier = Convert.ToDouble(_configuration["AzureWriteBlobPricing:ToCoolTier"]);
+            double priceReadBlob = 0;
 
             var container = _blobServiceClient.GetBlobContainerClient(containerName);
 
             await foreach (BlobItem blob in container.GetBlobsAsync())
             {
+                priceReadBlob += GetBlobReadingPrice(blob);
+
                 if (
                     blob.Properties.AccessTier == AccessTier.Hot && 
                     ((today - blob.Properties.CreatedOn.Value.Date).TotalDays >= days)
@@ -111,7 +114,7 @@ namespace AzureBlobStorage.POC.Api.Controllers
             return new BlobCleaningResponse 
             {
                 ItemsMoved = itemsMoved,
-                OperationCost = Math.Round(itemsCounter * priceToCoolTier, 5)
+                OperationCost = Math.Round((itemsCounter * priceWriteToCoolTier) + priceReadBlob, 5)
             };
         }
 
@@ -120,12 +123,15 @@ namespace AzureBlobStorage.POC.Api.Controllers
             var today = DateTime.Now;
             var itemsMoved = new List<string>();
             var itemsCounter = 0;
-            var priceToArchiveTier = Convert.ToDouble(_configuration["AzureMoveBlobPricing:ToArchiveTier"]);
+            var priceToArchiveTier = Convert.ToDouble(_configuration["AzureWriteBlobPricing:ToArchiveTier"]);
+            double priceReadBlob = 0;
 
             var container = _blobServiceClient.GetBlobContainerClient(containerName);
 
             await foreach (BlobItem blob in container.GetBlobsAsync())
             {
+                priceReadBlob += GetBlobReadingPrice(blob);
+
                 if (
                     blob.Properties.AccessTier == AccessTier.Cool &&
                     ((today - blob.Properties.CreatedOn.Value.Date).TotalDays >= days)
@@ -149,8 +155,22 @@ namespace AzureBlobStorage.POC.Api.Controllers
             return new BlobCleaningResponse
             {
                 ItemsMoved = itemsMoved,
-                OperationCost = Math.Round(itemsCounter * priceToArchiveTier, 5)
+                OperationCost = Math.Round((itemsCounter * priceToArchiveTier) + priceReadBlob, 5)
             };
+        }
+
+        private double GetBlobReadingPrice(BlobItem blob)
+        {
+            double price = 0;
+          
+            if (blob.Properties.AccessTier == AccessTier.Hot)
+                price = Convert.ToDouble(_configuration["AzureReadBlobPricing:FromHotTier"]);
+            else if (blob.Properties.AccessTier == AccessTier.Cool)
+                price = Convert.ToDouble(_configuration["AzureReadBlobPricing:FromCoolTier"]);
+            else if (blob.Properties.AccessTier == AccessTier.Archive)
+                price = Convert.ToDouble(_configuration["AzureReadBlobPricing:FromArchiveTier"]);
+
+            return price;
         }
     }
 }
